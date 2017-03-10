@@ -1,0 +1,57 @@
+﻿
+<div class="row">
+
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+        @foreach (var item in Model)
+        {
+            <div class="post-preview">
+                <a href="@Url.Action("Post", "Menu", new { id = item.ID + "-" + item.titleClean})">
+                    <h2 class="post-title">
+                        @item.title
+                    </h2>
+                    <h3 class="post-subtitle">
+                        @item.subtitle
+                    </h3>
+                </a>
+                <p class="post-meta">Posted by <a href="#">@item.displayName</a> a @item.datePublished.ToString("d MMMM yyyy")</p>
+            </div>
+            <hr>
+        }
+
+        <!-- Pager -->
+        <ul class="pager">
+            @if (ViewBag.PageCount >= ViewBag.PageIndex)
+            {
+                <li class="pag">
+                    <a href="@Url.Action("Index", "Menu", new{id=(ViewBag.PageIndex + 1 > ViewBag.PageCount) ? ViewBag.PageCount : (ViewBag.PageIndex + 1)})">&larr; Anteriores</a>
+                </li>
+            }
+
+            @if (ViewBag.PageIndex > 1)
+            {
+                <li class="pag">
+                    <a href="@Url.Action("Index", "Menu", new{id=(ViewBag.PageIndex -1 < 1) ? 1 : (ViewBag.PageIndex - 1)})">Siguientes &rarr;</a>
+                </li>
+            }
+
+
+        </ul>
+    </div>
+</div>
+
+@section Header{
+    <header class="intro-header" style="background-image: url('../../Content/img/disabled-toilet-548404_1920.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>ACCESSIBILITY</h1>
+                        <hr class="small">
+                        <span class="subheading">A Blog About Accessibility</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+}

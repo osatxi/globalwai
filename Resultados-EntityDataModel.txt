@@ -1,0 +1,15 @@
+﻿Archivo de modelo generado: GlobalwaiBlogModel.edmx.
+La carga de los metadatos desde la base de datos tardó 00:00:01.7192032.
+La generación del modelo tardó 00:00:02.3248589.
+Archivo de modelo generado: GlobalwaiBlogModel.edmx.
+La carga de los metadatos desde la base de datos tardó 00:00:01.5301488.
+La generación del modelo tardó 00:00:00.3851066.
+Archivo de modelo generado: GlobalwaiBlogModel.edmx.
+La carga de los metadatos desde la base de datos tardó 00:00:00.6785315.
+La generación del modelo tardó 00:00:00.4616356.
+Archivo de modelo generado: GlobalwaiBlogModel.edmx.
+La carga de los metadatos desde la base de datos tardó 00:00:01.4957464.
+La generación del modelo tardó 00:00:00.7979391.
+Archivo de modelo generado: GlobalwaiBlogModel.edmx.
+La carga de los metadatos desde la base de datos tardó 00:00:01.3057054.
+La generación del modelo tardó 00:00:01.0679435.

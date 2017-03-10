@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="283d4cb9935941fbaac870ddd2fc14e5" Name="Diagram1">
+        <EntityTypeShape EntityType="globalwaiBlogModel.author" Width="1.5" PointX="0.75" PointY="3.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="globalwaiBlogModel.category" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="globalwaiBlogModel.comment" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="globalwaiBlogModel.post" Width="1.5" PointX="3" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="globalwaiBlogModel.tag" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="globalwaiBlogModel.user" Width="1.5" PointX="5.25" PointY="7.125" IsExpanded="true" />
+        <AssociationConnector Association="globalwaiBlogModel.FK_comment_post" ManuallyRouted="false" />
+        <AssociationConnector Association="globalwaiBlogModel.FK_comment_user" ManuallyRouted="false" />
+        <AssociationConnector Association="globalwaiBlogModel.FK_tag_post" ManuallyRouted="false" />
+        <AssociationConnector Association="globalwaiBlogModel.postCategory" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

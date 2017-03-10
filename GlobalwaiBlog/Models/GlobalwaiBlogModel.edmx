@@ -1,0 +1,533 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="globalwaiBlogModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="displayName" Type="nvarchar" MaxLength="50" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="nameClean" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postID" Type="int" />
+          <Property Name="comment" Type="varchar(max)" />
+          <Property Name="userID" Type="int" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="title" Type="nvarchar" MaxLength="150" />
+          <Property Name="article" Type="varchar(max)" />
+          <Property Name="titleClean" Type="nvarchar" MaxLength="150" />
+          <Property Name="datePublished" Type="datetime" />
+          <Property Name="enabled" Type="bit" />
+          <Property Name="autorID" Type="int" />
+          <Property Name="subtitle" Type="nvarchar" MaxLength="150" />
+          <Property Name="image" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="postCategory">
+          <Key>
+            <PropertyRef Name="categoryID" />
+            <PropertyRef Name="postID" />
+          </Key>
+          <Property Name="categoryID" Type="int" Nullable="false" />
+          <Property Name="postID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="tag" Type="nvarchar" MaxLength="50" />
+          <Property Name="tagClean" Type="nvarchar" MaxLength="50" />
+          <Property Name="postID" Type="int" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_comment_post">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="postID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_post_author">
+          <End Role="author" Type="Self.author" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="autorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postCategory_category">
+          <End Role="category" Type="Self.category" Multiplicity="1" />
+          <End Role="postCategory" Type="Self.postCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="category">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="postCategory">
+              <PropertyRef Name="categoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_postCategory_post">
+          <End Role="post" Type="Self.post" Multiplicity="1" />
+          <End Role="postCategory" Type="Self.postCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="postCategory">
+              <PropertyRef Name="postID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tag_post">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="tag" Type="Self.tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tag">
+              <PropertyRef Name="postID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="postLista_Obtener" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PageIndex" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="PageCount" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="postPorId_Obtener" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="postsAuthor_Obtener" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="globalwaiBlogModelStoreContainer">
+          <EntitySet Name="author" EntityType="Self.author" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="category" EntityType="Self.category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comment" EntityType="Self.comment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="post" EntityType="Self.post" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="postCategory" EntityType="Self.postCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tag" EntityType="Self.tag" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_comment_post" Association="Self.FK_comment_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_user" Association="Self.FK_comment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_post_author" Association="Self.FK_post_author">
+            <End Role="author" EntitySet="author" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postCategory_category" Association="Self.FK_postCategory_category">
+            <End Role="category" EntitySet="category" />
+            <End Role="postCategory" EntitySet="postCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_postCategory_post" Association="Self.FK_postCategory_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="postCategory" EntitySet="postCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tag_post" Association="Self.FK_tag_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="tag" EntitySet="tag" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="globalwaiBlogModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="author">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="displayName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="firstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="post" Relationship="Self.FK_post_author" FromRole="author" ToRole="post" />
+        </EntityType>
+        <EntityType Name="category">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="nameClean" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="post" Relationship="Self.postCategory" FromRole="category" ToRole="post" />
+        </EntityType>
+        <EntityType Name="comment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postID" Type="Int32" />
+          <Property Name="comment1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="userID" Type="Int32" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="post" Relationship="Self.FK_comment_post" FromRole="comment" ToRole="post" />
+          <NavigationProperty Name="user" Relationship="Self.FK_comment_user" FromRole="comment" ToRole="user" />
+        </EntityType>
+        <EntityType Name="post">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="title" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="article" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="titleClean" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="datePublished" Type="DateTime" Precision="3" />
+          <Property Name="enabled" Type="Boolean" />
+          <Property Name="autorID" Type="Int32" />
+          <Property Name="subtitle" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="author" Relationship="Self.FK_post_author" FromRole="post" ToRole="author" />
+          <NavigationProperty Name="comment" Relationship="Self.FK_comment_post" FromRole="post" ToRole="comment" />
+          <NavigationProperty Name="tag" Relationship="Self.FK_tag_post" FromRole="post" ToRole="tag" />
+          <NavigationProperty Name="category" Relationship="Self.postCategory" FromRole="post" ToRole="category" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tag">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="tag1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tagClean" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postID" Type="Int32" />
+          <NavigationProperty Name="post" Relationship="Self.FK_tag_post" FromRole="tag" ToRole="post" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="comment" Relationship="Self.FK_comment_user" FromRole="user" ToRole="comment" />
+        </EntityType>
+        <Association Name="FK_post_author">
+          <End Role="author" Type="Self.author" Multiplicity="0..1" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="author">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="post">
+              <PropertyRef Name="autorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_post">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="postID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_comment_user">
+          <End Role="user" Type="Self.user" Multiplicity="0..1" />
+          <End Role="comment" Type="Self.comment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="comment">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tag_post">
+          <End Role="post" Type="Self.post" Multiplicity="0..1" />
+          <End Role="tag" Type="Self.tag" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="post">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tag">
+              <PropertyRef Name="postID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="postCategory">
+          <End Role="category" Type="Self.category" Multiplicity="*" />
+          <End Role="post" Type="Self.post" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="globalwaiBlogEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="author" EntityType="Self.author" />
+          <EntitySet Name="category" EntityType="Self.category" />
+          <EntitySet Name="comment" EntityType="Self.comment" />
+          <EntitySet Name="post" EntityType="Self.post" />
+          <EntitySet Name="tag" EntityType="Self.tag" />
+          <EntitySet Name="user" EntityType="Self.user" />
+          <AssociationSet Name="FK_post_author" Association="Self.FK_post_author">
+            <End Role="author" EntitySet="author" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_post" Association="Self.FK_comment_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_comment_user" Association="Self.FK_comment_user">
+            <End Role="user" EntitySet="user" />
+            <End Role="comment" EntitySet="comment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tag_post" Association="Self.FK_tag_post">
+            <End Role="post" EntitySet="post" />
+            <End Role="tag" EntitySet="tag" />
+          </AssociationSet>
+          <AssociationSet Name="postCategory" Association="Self.postCategory">
+            <End Role="category" EntitySet="category" />
+            <End Role="post" EntitySet="post" />
+          </AssociationSet>
+          <FunctionImport Name="postPorId_Obtener" ReturnType="Collection(globalwaiBlogModel.postPorId_Obtener_Result)">
+          <Parameter Name="ID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="postsAuthor_Obtener" ReturnType="Collection(globalwaiBlogModel.postsAuthor_Obtener_Result)" />
+          <FunctionImport Name="postLista_Obtener" ReturnType="Collection(globalwaiBlogModel.postLista_Obtener_Result)">
+            <Parameter Name="PageIndex" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="PageCount" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="postAuthor_Obtener_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="subtitle" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="article" Nullable="true" />
+          <Property Type="DateTime" Name="datePublished" Nullable="true" Precision="23" />
+          <Property Type="String" Name="displayName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="postPorId_Obtener_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="subtitle" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="titleClean" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="article" Nullable="true" />
+          <Property Type="DateTime" Name="datePublished" Nullable="true" Precision="23" />
+          <Property Type="Boolean" Name="enabled" Nullable="true" />
+          <Property Type="Binary" Name="image" Nullable="true" />
+          <Property Type="String" Name="displayName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="postsAuthor_Obtener_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="titleClean" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="subtitle" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="article" Nullable="true" />
+          <Property Type="DateTime" Name="datePublished" Nullable="true" Precision="23" />
+          <Property Type="String" Name="displayName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="postLista_Obtener_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="title" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="titleClean" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="subtitle" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="article" Nullable="true" />
+          <Property Type="DateTime" Name="datePublished" Nullable="true" Precision="23" />
+          <Property Type="String" Name="displayName" Nullable="true" MaxLength="50" />
+          <Property Type="Binary" Name="image" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="globalwaiBlogModelStoreContainer" CdmEntityContainer="globalwaiBlogEntities">
+          <EntitySetMapping Name="author">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.author">
+              <MappingFragment StoreEntitySet="author">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="category">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.category">
+              <MappingFragment StoreEntitySet="category">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="nameClean" ColumnName="nameClean" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comment">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.comment">
+              <MappingFragment StoreEntitySet="comment">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="postID" ColumnName="postID" />
+                <ScalarProperty Name="comment1" ColumnName="comment" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="date" ColumnName="date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="post">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.post">
+              <MappingFragment StoreEntitySet="post">
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="titleClean" ColumnName="titleClean" />
+                <ScalarProperty Name="datePublished" ColumnName="datePublished" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="autorID" ColumnName="autorID" />
+                <ScalarProperty Name="subtitle" ColumnName="subtitle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tag">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.tag">
+              <MappingFragment StoreEntitySet="tag">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="tag1" ColumnName="tag" />
+                <ScalarProperty Name="tagClean" ColumnName="tagClean" />
+                <ScalarProperty Name="postID" ColumnName="postID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="globalwaiBlogModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="postCategory" TypeName="globalwaiBlogModel.postCategory" StoreEntitySet="postCategory">
+            <EndProperty Name="category">
+              <ScalarProperty Name="ID" ColumnName="categoryID" />
+            </EndProperty>
+            <EndProperty Name="post">
+              <ScalarProperty Name="ID" ColumnName="postID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="postPorId_Obtener" FunctionName="globalwaiBlogModel.Store.postPorId_Obtener">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="globalwaiBlogModel.postPorId_Obtener_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="subtitle" ColumnName="subtitle" />
+                <ScalarProperty Name="titleClean" ColumnName="titleClean" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="datePublished" ColumnName="datePublished" />
+                <ScalarProperty Name="enabled" ColumnName="enabled" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="postsAuthor_Obtener" FunctionName="globalwaiBlogModel.Store.postsAuthor_Obtener">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="globalwaiBlogModel.postsAuthor_Obtener_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="titleClean" ColumnName="titleClean" />
+                <ScalarProperty Name="subtitle" ColumnName="subtitle" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="datePublished" ColumnName="datePublished" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="postLista_Obtener" FunctionName="globalwaiBlogModel.Store.postLista_Obtener">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="globalwaiBlogModel.postLista_Obtener_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="titleClean" ColumnName="titleClean" />
+                <ScalarProperty Name="subtitle" ColumnName="subtitle" />
+                <ScalarProperty Name="article" ColumnName="article" />
+                <ScalarProperty Name="datePublished" ColumnName="datePublished" />
+                <ScalarProperty Name="displayName" ColumnName="displayName" />
+                <ScalarProperty Name="image" ColumnName="image" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
