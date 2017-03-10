@@ -21,12 +21,12 @@
 
         <!-- Pager -->
         <ul class="pager">
-            @if (ViewBag.PageCount >= ViewBag.PageIndex)
-            {
+            @*@if (ViewBag.PageCount >= ViewBag.PageIndex)
+            {*@
                 <li class="pag">
                     <a href="@Url.Action("Index", "Menu", new{id=(ViewBag.PageIndex + 1 > ViewBag.PageCount) ? ViewBag.PageCount : (ViewBag.PageIndex + 1)})">&larr; Anteriores</a>
                 </li>
-            }
+            @*}*@
 
             @if (ViewBag.PageIndex > 1)
             {
