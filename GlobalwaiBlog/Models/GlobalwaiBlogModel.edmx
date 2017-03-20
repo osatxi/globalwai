@@ -146,7 +146,7 @@
         </Association>
         <Function Name="postLista_Obtener" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="PageIndex" Type="int" Mode="In" />
-          <Parameter Name="PageSize" Type="int" Mode="In" />
+          <Parameter Name="PageSize" Type="float" Mode="In" />
           <Parameter Name="PageCount" Type="int" Mode="InOut" />
         </Function>
         <Function Name="postPorId_Obtener" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -344,7 +344,7 @@
           <FunctionImport Name="postsAuthor_Obtener" ReturnType="Collection(globalwaiBlogModel.postsAuthor_Obtener_Result)" />
           <FunctionImport Name="postLista_Obtener" ReturnType="Collection(globalwaiBlogModel.postLista_Obtener_Result)">
             <Parameter Name="PageIndex" Mode="In" Type="Int32" />
-            <Parameter Name="PageSize" Mode="In" Type="Int32" />
+            <Parameter Name="PageSize" Mode="In" Type="Double" />
             <Parameter Name="PageCount" Mode="InOut" Type="Int32" />
           </FunctionImport>
         </EntityContainer>

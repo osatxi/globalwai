@@ -19,7 +19,7 @@ namespace GlobalwaiBlog.Controllers
             ObjectParameter pageCount = new ObjectParameter("PageCount", typeof(Int32));
             
             ViewBag.PageIndex = id;
-            var data = db.postLista_Obtener(id, 2, pageCount).ToList();
+            var data = db.postLista_Obtener(id, 2.0, pageCount).ToList();
             ViewBag.PageCount = pageCount.Value;
             return View(data);
         }
@@ -37,6 +37,12 @@ namespace GlobalwaiBlog.Controllers
         public ActionResult Post(int id = 0)
         {
             return View(db.postPorId_Obtener(id).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult EnviarMensaje()
+        {
+            return null;
         }
     }
 }

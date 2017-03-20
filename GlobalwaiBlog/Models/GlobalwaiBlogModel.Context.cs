@@ -48,7 +48,7 @@ namespace GlobalwaiBlog.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<postsAuthor_Obtener_Result>("postsAuthor_Obtener");
         }
     
-        public virtual ObjectResult<postLista_Obtener_Result> postLista_Obtener(Nullable<int> pageIndex, Nullable<int> pageSize, ObjectParameter pageCount)
+        public virtual ObjectResult<postLista_Obtener_Result> postLista_Obtener(Nullable<int> pageIndex, Nullable<double> pageSize, ObjectParameter pageCount)
         {
             var pageIndexParameter = pageIndex.HasValue ?
                 new ObjectParameter("PageIndex", pageIndex) :
@@ -56,7 +56,7 @@ namespace GlobalwaiBlog.Models
     
             var pageSizeParameter = pageSize.HasValue ?
                 new ObjectParameter("PageSize", pageSize) :
-                new ObjectParameter("PageSize", typeof(int));
+                new ObjectParameter("PageSize", typeof(double));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<postLista_Obtener_Result>("postLista_Obtener", pageIndexParameter, pageSizeParameter, pageCount);
         }

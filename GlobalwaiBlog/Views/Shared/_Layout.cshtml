@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>@ViewBag</title>
+    <title>Globalwai</title>
     
     <!--Bootstrap Core CSS-->
     @Styles.Render("~/bunddles/css")
@@ -37,18 +37,6 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    @*<li>
-                        <a href="Inicio.cshtml">Home</a>
-                    </li>
-                    <li>
-                        <a href="about.html">About</a>
-                    </li>
-                    <li>
-                        <a href="post.html">Sample Post</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Contact</a>
-                    </li>*@
                     <li>@Html.ActionLink("Home", "Index", "Menu")</li>
                     <li>@Html.ActionLink("Sobre mí", "About", "Menu")</li>
                     <li>@Html.ActionLink("Post", "Post", "Menu")</li>
@@ -64,19 +52,6 @@
     <div id="header">
         @RenderSection("Header", required: false)
     </div>
-    @*<header class="intro-header" style="background-image: url('../../Content/img/home-bg.jpg')">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-                <div class="site-heading">
-                    <h1>Clean Blog</h1>
-                    <hr class="small">
-                    <span class="subheading">A Clean Blog Theme by Start Bootstrap</span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </header>*@
 
     <!-- Main Content -->
     <div class="container">
